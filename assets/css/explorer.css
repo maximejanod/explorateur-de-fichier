@@ -1,0 +1,29 @@
+
+.container > h1 {
+  margin-top: 32px
+}
+
+.content {
+  margin-top: 64px
+}
+
+.content > ul > li {
+  list-style: none
+}
+
+.folder, .file {
+  font-size: 1.4rem
+}
+
+.folder {
+  font-weight: bold
+}
+
+.file {
+
+}
+
+.i-folder, .i-file {
+  width: 32px;
+  margin-right: 16px
+}
