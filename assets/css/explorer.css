@@ -1,13 +1,13 @@
 
 .container > h1 {
-  margin-top: 32px
+  margin: 32px
 }
 
 .content {
-  margin-top: 64px
+  margin-top: 32px
 }
 
-.content > ul > li {
+.content > form > ul > li {
   list-style: none
 }
 

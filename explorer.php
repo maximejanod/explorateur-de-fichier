@@ -1,35 +1,65 @@
 
 <?php
 
-// root folder
-$folder = 'root/';
+$rootFolder = 'root';
 
-// contain folders & files in $folder less . current folder & .. parent folder
-$scaffolding = array_diff(scandir($folder), array('.', '..'));
+function listFolder(string $from): string {
 
-// var_dump($scaffolding); die();
+  $scaffolding = array_diff(scandir($from), array('.', '..'));
 
-// declare empty arrays
-$folders  = [];
-$files    = [];
+  $folders  = [];
+  $files    = [];
 
-// open list
-$data = '<ul>';
+  $data = '<form method="get">
+            <ul>';
 
-// loop to check if element is folder or file and push in good array
-foreach ($scaffolding as $element)
-  is_dir($folder.'/'.$element) ? array_push($folders, $element) : array_push($files, $element);
+  foreach($scaffolding as $element) {
 
-// loop on folders
-foreach($folders as $folder)
-  $data .= '<li class="folder"><img class="i-folder" src="assets/icons/folder.png" alt="folder icon">'.ucfirst($folder).'</li>';
+    $path = $from.DIRECTORY_SEPARATOR.$element;
 
-// loop on files
-foreach($files as $file)
-  $data .= '<li class="file"><img class="i-file" src="assets/icons/file.png" alt="file icon">'.ucfirst($file).'</li>';
+    if(is_dir($path)) {
 
-// close list
-$data .= '</ul>';
+      array_push($folders, [$element, $path]);
+
+    } else {
+
+      array_push($files, $element);
+
+    }
+
+
+  }
+
+  foreach($folders as $folder)
+    $data .= '<li class="folder">
+                <a href="explorer.php?path='.$folder[1].'">
+                  <img class="i-folder" src="assets/icons/folder.png" alt="folder icon">'.$folder[0].
+                '</a>
+              </li>';
+
+  foreach($files as $file)
+    $data .= '<li class="file">
+                <img class="i-file" src="assets/icons/file.png" alt="file icon">'.$file.
+             '</li>';
+
+  return $data .=     '</ul>
+                   </form>';
+
+}
+
+function getBreadcrumb(string $path): string {
+
+ return '
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">'.$path.'</li>
+      </ol>
+    </nav>
+
+  ';
+
+}
 
 ?><DOCTYPE html>
 <html>
@@ -46,8 +76,10 @@ $data .= '</ul>';
 
       <h1>Explorator</h1>
 
+      <?php echo empty($_GET) ? getBreadcrumb($rootFolder) : getBreadcrumb($_GET['path']); ?>
+
       <div class="content">
-        <?= $data; ?>
+        <?php echo empty($_GET) ? listFolder($rootFolder) : listFolder($_GET['path']); ?>
       </div>
 
     </div>
