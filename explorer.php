@@ -3,70 +3,96 @@
 
 $rootFolder = 'root';
 
+function checkGet(array $get): string {
+
+  if(isset($_GET['path']) && isset($_GET['sound'])) {
+
+    $path = $_GET['path'];
+
+    if(substr($path, 0, 4) === 'root') {
+
+      return listFolder($path, $_GET['sound']);
+
+    } else {
+
+      return '<p class="error">Désolé, une erreur s\'est produite.</p>';
+
+    }
+
+  } else {
+
+    return '<p class="error">Désolé, une erreur s\'est produite.</p>';
+
+  }
+
+}
+
 function listFolder(string $folder, string $sound = 'false'): string {
 
   $scaffolding = array_diff(scandir($folder), array('.', '..'));
 
-  $folders = $files = [];
 
-  $data = '<form method="get">
-            <ul>';
+    $folders = $files = [];
 
-  foreach($scaffolding as $element) {
+    $data = '<form method="get">
+              <ul>';
 
-    $path = $folder.DIRECTORY_SEPARATOR.$element;
+    foreach($scaffolding as $element) {
 
-    if(is_dir($path)) {
+      $path = $folder.DIRECTORY_SEPARATOR.$element;
 
-      array_push($folders, [$element, $path]);
+      if(is_dir($path)) {
 
-    } else {
+        array_push($folders, [$element, $path]);
 
-      array_push($files, [$path, $element, filesize($folder.'/'.$element), date('d F Y - H:i:s', filemtime($folder.'/'.$element))]);
+      } else {
+
+        array_push($files, [$path, $element, filesize($folder.'/'.$element), date('d F Y - H:i:s', filemtime($folder.'/'.$element))]);
+
+      }
+
 
     }
 
+    foreach($folders as $folder) {
 
-  }
+      $data .= '<li class="folder">
+                  <a href="explorer.php?path='.$folder[1].'&sound=true">
+                    <img class="i-folder" src="assets/icons/folder.png" alt="folder icon">'.$folder[0].
+                  '</a>
+                </li>';
 
-  foreach($folders as $folder) {
+    }
 
-    $data .= '<li class="folder">
-                <a href="explorer.php?path='.$folder[1].'&sound=true">
-                  <img class="i-folder" src="assets/icons/folder.png" alt="folder icon">'.$folder[0].
-                '</a>
-              </li>';
+    foreach($files as $file) {
 
-  }
+      $path = $file[0];
+      $name = $file[1];
+      $size = $file[2];
+      $date = $file[3];
 
-  foreach($files as $file) {
+      $formatted = $size != 0 ? 'octets' : 'octet';
 
-    $path = $file[0];
-    $name = $file[1];
-    $size = $file[2];
-    $date = $file[3];
+      $data .= '<li class="file">
+                  <img class="i-file" src="assets/icons/'.getIcon($name).'.png" alt="file icon">
+                  <a href="'.$path.'" download>'.$name.'</a>
+                  <span class="details">'.$size.' '.$formatted.' / '.$date.
+                  '</span>
+                </li>';
 
-    $formatted = $size != 0 ? 'octets' : 'octet';
+    }
 
-    $data .= '<li class="file">
-                <img class="i-file" src="assets/icons/'.getIcon($name).'.png" alt="file icon">
-                <a href="'.$path.'" download>'.$name.'</a>
-                <span class="details">'.$size.' '.$formatted.' / '.$date.
-                '</span>
-              </li>';
+    $data .= '</ul></form>';
 
-  }
+    if($sound == 'true') {
 
-  $data .= '</ul></form>';
+      $data .= '<audio src="assets/sounds/'.getRandomSound().'" autoplay></audio>';
+      // $data .= '<audio src="assets/sounds/explorer.mp3" autoplay></audio>';
 
-  if($sound == 'true') {
+    }
 
-    $data .= '<audio src="assets/sounds/'.getRandomSound().'" autoplay></audio>';
-    // $data .= '<audio src="assets/sounds/explorer.mp3" autoplay></audio>';
+    return $data;
 
-  }
-
-  return $data;
 
 }
 
@@ -151,7 +177,7 @@ function getRandomSound() {
       <?php echo empty($_GET) ? getBreadcrumb($rootFolder) : getBreadcrumb($_GET['path']); ?>
 
       <div class="content">
-        <?php echo empty($_GET) ? listFolder($rootFolder) : listFolder($_GET['path'], $_GET['sound']); ?>
+        <?php echo empty($_GET) ? listFolder($rootFolder, 'false') : checkGet($_GET); ?>
       </div>
 
     </div>
