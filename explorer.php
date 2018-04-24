@@ -3,7 +3,7 @@
 
 $rootFolder = 'root';
 
-function listFolder(string $folder): string {
+function listFolder(string $folder, string $sound = 'false'): string {
 
   $scaffolding = array_diff(scandir($folder), array('.', '..'));
 
@@ -32,7 +32,7 @@ function listFolder(string $folder): string {
   foreach($folders as $folder) {
 
     $data .= '<li class="folder">
-                <a href="explorer.php?path='.$folder[1].'">
+                <a href="explorer.php?path='.$folder[1].'&sound=true">
                   <img class="i-folder" src="assets/icons/folder.png" alt="folder icon">'.$folder[0].
                 '</a>
               </li>';
@@ -57,8 +57,16 @@ function listFolder(string $folder): string {
 
   }
 
-  return $data .=     '</ul>
-                   </form>';
+  $data .= '</ul></form>';
+
+  if($sound == 'true') {
+
+    $data .= '<audio src="assets/sounds/'.getRandomSound().'" autoplay></audio>';
+    // $data .= '<audio src="assets/sounds/explorer.mp3" autoplay></audio>';
+
+  }
+
+  return $data;
 
 }
 
@@ -72,7 +80,7 @@ function getBreadcrumb(string $path): string {
 
     $step .= $explode.'/';
 
-    $breadcrumb .= '<li class="breadcrumb-item"><a href="explorer.php?path='.substr($step, 0, -1).'">'.$explode.'</a></li>';
+    $breadcrumb .= '<li class="breadcrumb-item"><a href="explorer.php?path='.substr($step, 0, -1).'&sound=false">'.$explode.'</a></li>';
 
   }
 
@@ -117,6 +125,14 @@ function getIcon(string $file): string {
 
 }
 
+function getRandomSound() {
+
+  $sounds = array_values(array_diff(scandir('assets/sounds'), array('.', '..')));
+
+  return $sounds[array_rand($sounds)];
+
+}
+
 ?><!DOCTYPE html>
 <html>
   <head>
@@ -135,7 +151,7 @@ function getIcon(string $file): string {
       <?php echo empty($_GET) ? getBreadcrumb($rootFolder) : getBreadcrumb($_GET['path']); ?>
 
       <div class="content">
-        <?php echo empty($_GET) ? listFolder($rootFolder) : listFolder($_GET['path']); ?>
+        <?php echo empty($_GET) ? listFolder($rootFolder) : listFolder($_GET['path'], $_GET['sound']); ?>
       </div>
 
     </div>
