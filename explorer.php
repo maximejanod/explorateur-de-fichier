@@ -16,20 +16,28 @@ function listFolder(string $folder): string {
 
     $path = $folder.DIRECTORY_SEPARATOR.$element;
 
-    is_dir($path)
-    ?
-      array_push($folders, [$element, $path])
-    :
+    if(is_dir($path)) {
+
+      array_push($folders, [$element, $path]);
+
+    } else {
+
       array_push($files, [$path, $element, filesize($folder.'/'.$element), date('d F Y - H:i:s', filemtime($folder.'/'.$element))]);
+
+    }
+
 
   }
 
-  foreach($folders as $folder)
+  foreach($folders as $folder) {
+
     $data .= '<li class="folder">
                 <a href="explorer.php?path='.$folder[1].'">
                   <img class="i-folder" src="assets/icons/folder.png" alt="folder icon">'.$folder[0].
                 '</a>
               </li>';
+
+  }
 
   foreach($files as $file) {
 

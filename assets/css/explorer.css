@@ -82,6 +82,7 @@
 
 .container > h1 {
   margin: 32px;
+  text-align: center;
 }
 
 .content {
