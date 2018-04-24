@@ -41,7 +41,7 @@ function listFolder(string $folder): string {
     $formatted = $size != 0 ? 'octets' : 'octet';
 
     $data .= '<li class="file">
-                <img class="i-file" src="assets/icons/file.png" alt="file icon">
+                <img class="i-file" src="assets/icons/'.getIcon($name).'.png" alt="file icon">
                 <a href="'.$path.'" download>'.$name.'</a>
                 <span class="details">'.$size.' '.$formatted.' / '.$date.
                 '</span>
@@ -82,7 +82,34 @@ function getBreadcrumb(string $path): string {
 
 }
 
-?><DOCTYPE html>
+function getIcon(string $file): string {
+
+  $exploded   = explode('.', $file);
+  $extension  = end($exploded);
+
+  if($extension === 'png' || $extension === 'jpeg' || $extension === 'jpg' || $extension === 'gif') {
+
+    $icon = 'image';
+
+  } else if($extension === 'mp3') {
+
+    $icon = 'music';
+
+  } else if($extension === 'mp4') {
+
+    $icon = 'video';
+
+  } else {
+
+    $icon = 'file';
+
+  }
+
+  return $icon;
+
+}
+
+?><!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">

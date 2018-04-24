@@ -1,4 +1,9 @@
 
+:focus {
+  outline: none
+}
+
+/*
 .container > h1 {
   margin: 32px
 }
@@ -48,4 +53,89 @@
 
 .breadcrumb-item > a {
   color: #7253B2
+}
+*/
+
+.content > form > ul > li {
+  list-style: none;
+}
+
+.details {
+  margin-left: 32px;
+  font-size: 1rem;
+  font-style: italic
+}
+
+.folder > a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.file > a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.breadcrumb-item > a {
+  color: rgb(92, 92, 92);
+}
+
+.container > h1 {
+  margin: 32px;
+}
+
+.content {
+  margin-top: 32px;
+}
+
+.content > form > ul > li {
+  list-style: none;
+}
+
+.folder {
+  font-weight: bold;
+}
+
+.i-folder {
+  width: 32px;
+  height: 32px;
+  margin-right: 13px;
+  margin-left: 22px;
+  opacity: 0.8;
+}
+
+.i-file {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  margin-left: 26px;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #262626;
+  font-family: Courier;
+  font-size: 16px;
+  color: #1BE32F;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(195, 207, 197);
+  font-family: Courier;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+a:hover {
+  color: #1BE32F;
+}
+
+ul {
+  list-style-type: none;
+  line-height: 45px;
 }
