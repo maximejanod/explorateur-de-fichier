@@ -3,30 +3,24 @@
 
 $rootFolder = 'root';
 
-function listFolder(string $from): string {
+function listFolder(string $folder): string {
 
-  $scaffolding = array_diff(scandir($from), array('.', '..'));
+  $scaffolding = array_diff(scandir($folder), array('.', '..'));
 
-  $folders  = [];
-  $files    = [];
+  $folders = $files = [];
 
   $data = '<form method="get">
             <ul>';
 
   foreach($scaffolding as $element) {
 
-    $path = $from.DIRECTORY_SEPARATOR.$element;
+    $path = $folder.DIRECTORY_SEPARATOR.$element;
 
-    if(is_dir($path)) {
-
-      array_push($folders, [$element, $path]);
-
-    } else {
-
-      array_push($files, $element);
-
-    }
-
+    is_dir($path)
+    ?
+      array_push($folders, [$element, $path])
+    :
+      array_push($files, [$path, $element, filesize($folder.'/'.$element), date('d F Y - H:i:s', filemtime($folder.'/'.$element))]);
 
   }
 
@@ -37,10 +31,23 @@ function listFolder(string $from): string {
                 '</a>
               </li>';
 
-  foreach($files as $file)
+  foreach($files as $file) {
+
+    $path = $file[0];
+    $name = $file[1];
+    $size = $file[2];
+    $date = $file[3];
+
+    $formatted = $size != 0 ? 'octets' : 'octet';
+
     $data .= '<li class="file">
-                <img class="i-file" src="assets/icons/file.png" alt="file icon">'.$file.
-             '</li>';
+                <img class="i-file" src="assets/icons/file.png" alt="file icon">
+                <a href="'.$path.'" download>'.$name.'</a>
+                <span class="details">'.$size.' '.$formatted.' / '.$date.
+                '</span>
+              </li>';
+
+  }
 
   return $data .=     '</ul>
                    </form>';
@@ -49,15 +56,29 @@ function listFolder(string $from): string {
 
 function getBreadcrumb(string $path): string {
 
- return '
+  $exploded       = explode('/', $path);
+  $breadcrumb     = '';
+  $step           = '';
 
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item active">'.$path.'</li>
-      </ol>
-    </nav>
+  foreach($exploded as $explode) {
 
-  ';
+    $step .= $explode.'/';
+
+    $breadcrumb .= '<li class="breadcrumb-item"><a href="explorer.php?path='.substr($step, 0, -1).'">'.$explode.'</a></li>';
+
+  }
+
+  return '
+
+     <form method="get">
+       <nav aria-label="breadcrumb">
+         <ol class="breadcrumb">
+           '.$breadcrumb.'
+         </ol>
+       </nav>
+     </form>
+
+   ';
 
 }
 
