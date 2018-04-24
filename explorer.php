@@ -9,7 +9,7 @@ function checkGet(array $get): string {
 
     $path = $_GET['path'];
 
-    if(substr($path, 0, 4) === 'root') {
+    if(substr($path, 0, 4) === 'root' && file_exists($path)) {
 
       return listFolder($path, $_GET['sound']);
 
@@ -31,6 +31,7 @@ function listFolder(string $folder, string $sound = 'false'): string {
 
   $scaffolding = array_diff(scandir($folder), array('.', '..'));
 
+  if(count($scaffolding) > 0) {
 
     $folders = $files = [];
 
@@ -93,6 +94,11 @@ function listFolder(string $folder, string $sound = 'false'): string {
 
     return $data;
 
+  } else {
+
+    return '<p class="error">Désolé, une erreur s\'est produite.</p>';
+
+  }
 
 }
 
