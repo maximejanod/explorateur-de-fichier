@@ -8,7 +8,8 @@ require_once __DIR__.'/vendor/autoload.php';
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig   = new Twig_Environment($loader, array(
 
-    'cache' => './cache'
+    // 'cache' => './cache'
+    'cache' => false
   , 'debug' => true
 
 ));
@@ -30,7 +31,7 @@ function checkGet(array $get): array {
 
       $path = $_GET['path'];
 
-      if(substr($path, 0, 4) === 'root' && file_exists($path)) {
+      if(substr($path, 0, 4) === 'root' && !strpos($path, '..') && file_exists($path)) {
 
         return array(
 
