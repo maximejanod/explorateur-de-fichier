@@ -1,4 +1,7 @@
 
-explorer.html
+composer.lock
+explorer.old.php
 recursive.php
 /php
+/vendor
+/cache

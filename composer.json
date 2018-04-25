@@ -1,0 +1,15 @@
+{
+    "name": "acs/explorer",
+    "description": "files explorer",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "acs",
+            "email": "mail@mailbox.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^2.0"
+    }
+}
