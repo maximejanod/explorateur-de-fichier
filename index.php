@@ -1,9 +1,9 @@
 
 <?php
 
-define('ROOT_FOLDER', 'root');
-
 require_once __DIR__.'/vendor/autoload.php';
+
+define('ROOT_FOLDER', 'root');
 
 $loader = new Twig_Loader_Filesystem('./templates');
 $twig   = new Twig_Environment($loader, array(
@@ -14,14 +14,14 @@ $twig   = new Twig_Environment($loader, array(
 
 ));
 
-function checkGet(array $get): array {
+function checkGet(): array {
 
   if(empty($_GET)) {
 
     return array(
 
         'breadcrumb'    => getBreadcrumb(ROOT_FOLDER)
-      , 'scaffolding'   => listFolder(ROOT_FOLDER, 'false')
+      , 'scaffolding'   => listFolder(ROOT_FOLDER, false)
 
     );
 
@@ -84,7 +84,7 @@ function getBreadcrumb(string $path): array {
 
 }
 
-function listFolder(string $folder, string $sound = 'false'): array {
+function listFolder(string $folder, string $sound): array {
 
   $scaffolding = array_diff(scandir($folder), array('.', '..'));
 
@@ -119,7 +119,6 @@ function listFolder(string $folder, string $sound = 'false'): array {
       'folders'   => $folders
     , 'files'     => $files
     , 'sound'     => $sound === 'true' ? getRandomSound() : false
-    , 'name'      => 'Bobby Flex'
 
   );
 
@@ -160,6 +159,6 @@ function getRandomSound() {
 
 }
 
-echo $twig->render('explorer.html', checkGet($_GET));
+echo $twig->render('explorer.html', checkGet());
 
 ?>
