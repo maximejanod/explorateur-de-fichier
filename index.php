@@ -18,12 +18,12 @@ function checkGet(): array {
 
   if(empty($_GET)) {
 
-    return array(
+    return [
 
         'breadcrumb'    => getBreadcrumb(ROOT_FOLDER)
       , 'scaffolding'   => listFolder(ROOT_FOLDER, false)
 
-    );
+    ];
 
   } else {
 
@@ -33,32 +33,32 @@ function checkGet(): array {
 
       if(substr($path, 0, 4) === 'root' && !strpos($path, '..') && file_exists($path)) {
 
-        return array(
+        return [
 
             'breadcrumb'    => getBreadcrumb($path)
           , 'scaffolding'   => listFolder($path, $_GET['sound'])
 
-        );
+        ];
 
       } else {
 
-        return array(
+        return [
 
             'error'       => 'Désolé, ce dossier n\'est pas accessible.'
           , 'breadcrumb'  => getBreadcrumb(ROOT_FOLDER)
 
-        );
+        ];
 
       }
 
     } else {
 
-      return array(
+      return [
 
           'error'       => 'Désolé, une erreur s\'est produite.'
         , 'breadcrumb'  => getBreadcrumb(ROOT_FOLDER)
 
-      );
+      ];
 
     }
 
@@ -114,13 +114,13 @@ function listFolder(string $folder, string $sound): array {
 
   }
 
-  return array(
+  return [
 
       'folders'   => $folders
     , 'files'     => $files
     , 'sound'     => $sound === 'true' ? getRandomSound() : false
 
-  );
+  ];
 
 }
 
