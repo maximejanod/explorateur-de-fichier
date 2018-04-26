@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/favicon-acs.png"/>
+    <link rel="stylesheet" href="assets/css/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/explorer.css">
+    <title>Explorator</title>
+  </head>
+  <body>
+    <div class="container">
+
+      <h1>Explorator</h1>
+
+      <form method="get">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+
+            {# BREADCRUMB #}
+            {% for item in breadcrumb %}
+              <li class="breadcrumb-item">
+                <a href="?path={{ item.path }}&sound=false">{{ item.name }}</a>
+              </li>
+            {% endfor %}
+
+          </ol>
+        </nav>
+      </form>
+
+      <div class="content">
+
+        {% if error %}
+
+          <p>{{ error }}</p>
+
+        {% else %}
+
+          <ul>
+            <form method="get">
+
+              {# FOLDERS #}
+              {% for folder in scaffolding.folders %}
+                <li class="folder">
+                  <a href="?path={{ folder.path }}&sound=true">
+                    <img class="i-folder" src="assets/icons/folder.png" alt="folder icon">
+                    {{ folder.name }}
+                  </a>
+                </li>
+              {% endfor %}
+
+            </form>
+
+              {# FILES #}
+              {% for file in scaffolding.files %}
+                <li class="file">
+                  <img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon">
+                  <a href="{{ file.path }}" download>{{ file.name }}</a>
+                  <span class="details">
+                    {{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %}
+                    &#11825; {{ file.date }}
+                    &#11825; {{ file.type }}
+                    &#11825; {{ file.owner }}
+                    &#11825; 0{{ file.chmod }}
+                  </span>
+                </li>
+              {% endfor %}
+
+          </ul>
+        </div>
+
+        {% if scaffolding.sound %}
+          {# from http://soundbible.com #}
+          <audio src="assets/sounds/{{ scaffolding.sound }}" autoplay></audio>
+        {% endif %}
+
+      {% endif %}
+
+    </div>
+    <script src="assets/js/explorer.js"></script>
+  </body>
+</html>

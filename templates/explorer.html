@@ -37,37 +37,48 @@
 
         {% else %}
 
-          <ul>
-            <form method="get">
+          <form method="get">
 
-              {# FOLDERS #}
-              {% for folder in scaffolding.folders %}
-                <li class="folder">
-                  <a href="?path={{ folder.path }}&sound=true">
-                    <img class="i-folder" src="assets/icons/folder.png" alt="folder icon">
-                    {{ folder.name }}
-                  </a>
-                </li>
-              {% endfor %}
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Size</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Permissions</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
 
-            </form>
+                {# FOLDERS #}
+                {% for folder in scaffolding.folders %}
+                  <tr>
+                    <th scope="row"><img class="i-folder" src="assets/icons/folder.png" alt="folder icon"></th>
+                    <td><a href="?path={{ folder.path }}&sound=true">{{ folder.name }}</a></td>
+                  </tr>
+                {% endfor %}
 
-              {# FILES #}
-              {% for file in scaffolding.files %}
-                <li class="file">
-                  <img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon">
-                  <a href="{{ file.path }}" download>{{ file.name }}</a>
-                  <span class="details">
-                    {{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %}
-                    &#11825; {{ file.date }}
-                    &#11825; {{ file.type }}
-                    &#11825; {{ file.owner }}
-                    &#11825; 0{{ file.chmod }}
-                  </span>
-                </li>
-              {% endfor %}
+                {# FILES #}
+                {% for file in scaffolding.files %}
+                  <tr>
+                    <th scope="row"><img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon"></th>
+                    <td>{{ file.name }}</td>
+                    <td>{{ file.type }}</td>
+                    <td> {{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %}</td>
+                    <td>{{ file.owner }}</td>
+                    <td>{{ file.chmod }}</td>
+                    <td>{{ file.date }}</td>
+                  </tr>
+                {% endfor %}
 
-          </ul>
+              </tbody>
+            </table>
+
+          </form>
+
         </div>
 
         {% if scaffolding.sound %}
