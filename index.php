@@ -100,11 +100,6 @@ function listFolder(string $folder, string $sound): array {
 
           'name'    => $element
         , 'path'    => $path
-        , 'size'    => filesize($path)
-        , 'date'    => date('d F Y - H:i:s', filemtime($path))
-        , 'type'    => finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path)
-        , 'owner'   => posix_getpwuid(fileowner($path))['name']
-        , 'chmod'   => decoct(fileperms($path) & 0777)
 
       ]);
 
