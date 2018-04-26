@@ -96,17 +96,30 @@ function listFolder(string $folder, string $sound): array {
 
     if(is_dir($path)) {
 
-      array_push($folders, ['name' => $element, 'path' => $path]);
+      array_push($folders, [
+
+          'name'    => $element
+        , 'path'    => $path
+        , 'size'    => filesize($path)
+        , 'date'    => date('d F Y - H:i:s', filemtime($path))
+        , 'type'    => finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path)
+        , 'owner'   => posix_getpwuid(fileowner($path))['name']
+        , 'chmod'   => decoct(fileperms($path) & 0777)
+
+      ]);
 
     } else {
 
       array_push($files, [
 
-          'name' => $element
-        , 'path' => $path
-        , 'icon' => getIcon($element)
-        , 'size' => filesize($folder.'/'.$element)
-        , 'date' => date('d F Y - H:i:s', filemtime($folder.'/'.$element))
+          'name'    => $element
+        , 'path'    => $path
+        , 'icon'    => getIcon($element)
+        , 'size'    => filesize($path)
+        , 'date'    => date('d F Y - H:i:s', filemtime($path))
+        , 'type'    => finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path)
+        , 'owner'   => posix_getpwuid(fileowner($path))['name']
+        , 'chmod'   => decoct(fileperms($path) & 0777)
 
       ]);
 

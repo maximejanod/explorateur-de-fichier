@@ -58,7 +58,11 @@
                   <img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon">
                   <a href="{{ file.path }}" download>{{ file.name }}</a>
                   <span class="details">
-                    {{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %} / {{ file.date }}
+                    {{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %}
+                    &#11825; {{ file.date }}
+                    &#11825; {{ file.type }}
+                    &#11825; {{ file.owner }}
+                    &#11825; 0{{ file.chmod }}
                   </span>
                 </li>
               {% endfor %}
