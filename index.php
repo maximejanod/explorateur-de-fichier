@@ -107,14 +107,14 @@ function listFolder(string $folder, string $sound): array {
 
       array_push($files, [
 
-          'name'    => $element
+          'icon'    => getIcon($element)
+        , 'name'    => $element
         , 'path'    => $path
-        , 'icon'    => getIcon($element)
-        , 'size'    => filesize($path)
-        , 'date'    => date('d F Y - H:i:s', filemtime($path))
         , 'type'    => finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path)
+        , 'size'    => filesize($path)
         , 'owner'   => posix_getpwuid(fileowner($path))['name']
         , 'chmod'   => decoct(fileperms($path) & 0777)
+        , 'date'    => date('d F Y - H:i:s', filemtime($path))
 
       ]);
 

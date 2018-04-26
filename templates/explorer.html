@@ -41,6 +41,7 @@
 
             <table class="table">
               <thead>
+
                 <tr>
                   <th scope="col"></th>
                   <th scope="col">Name</th>
@@ -50,6 +51,12 @@
                   <th scope="col">Permissions</th>
                   <th scope="col">Date</th>
                 </tr>
+
+                <!-- <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Dossiers / Fichiers</th>
+                </tr> -->
+
               </thead>
               <tbody>
 
@@ -63,15 +70,29 @@
 
                 {# FILES #}
                 {% for file in scaffolding.files %}
+
                   <tr>
                     <th scope="row"><img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon"></th>
-                    <td>{{ file.name }}</td>
+                    <td><a href="{{ file.path }}" download>{{ file.name }}</a></td>
                     <td>{{ file.type }}</td>
                     <td> {{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %}</td>
                     <td>{{ file.owner }}</td>
-                    <td>{{ file.chmod }}</td>
+                    <td>0{{ file.chmod }}</td>
                     <td>{{ file.date }}</td>
                   </tr>
+
+                  <!-- <tr>
+                    <th scope="row"><img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon"></th>
+                    <td>
+                      <span><a href="{{ file.path }}" download>{{ file.name }}</a></span>
+                      <span>{{ file.type }}</span>
+                      <span>{{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %}</span>
+                      <span>{{ file.owner }}</span>
+                      <span>{{ file.chmod }}</span>
+                      <span>{{ file.date }}</span>
+                    </td>
+                  </tr> -->
+
                 {% endfor %}
 
               </tbody>

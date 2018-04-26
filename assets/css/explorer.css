@@ -87,3 +87,8 @@ ul {
   list-style-type: none;
   line-height: 45px;
 }
+
+.table td, .table th {
+  border-top: none;
+  vertical-align: middle;
+}
