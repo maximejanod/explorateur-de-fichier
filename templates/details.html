@@ -5,22 +5,21 @@
 
 <form method="get">
 
-  <table class="table">
+  <table class="table table-dark">
     <thead>
 
       <tr id="tr-desktop">
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col">Type</th>
-        <th scope="col">Size</th>
-        <th scope="col">Owner</th>
-        <th scope="col">Permissions</th>
-        <th scope="col">Date</th>
+        <th></th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Size</th>
+        <th>Owner</th>
+        <th>Permissions</th>
+        <th>Date</th>
       </tr>
 
       <tr id="tr-mobile">
-        <th scope="col"></th>
-        <th scope="col">Dossiers / Fichiers</th>
+        <th>Dossiers - Fichiers</th>
       </tr>
 
     </thead>
@@ -28,8 +27,8 @@
 
       {# FOLDERS #}
       {% for folder in scaffolding.folders %}
-        <tr>
-          <th scope="row"><img class="i-folder" src="assets/icons/folder.png" alt="folder icon"></th>
+        <tr class="tr-folder">
+          <th><img class="i-folder" src="assets/icons/folder.png" alt="folder icon"></th>
           <td><a href="?path={{ folder.path }}&sound=true&view={{ view }}">{{ folder.name }}</a></td>
         </tr>
       {% endfor %}
@@ -38,7 +37,7 @@
       {% for file in scaffolding.files %}
 
         <tr class="tr-desktop">
-          <th scope="row"><img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon"></th>
+          <th><img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon"></th>
           <td><a href="{{ file.path }}" download>{{ file.name }}</a></td>
           <td>{{ file.type }}</td>
           <td>{{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %}</td>
@@ -48,7 +47,7 @@
         </tr>
 
         <tr class="tr-mobile">
-          <th scope="row"><img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon"></th>
+          <th><img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon"></th>
           <td>
             <span><a href="{{ file.path }}" download>{{ file.name }}</a></span>
             <span>{{ file.type }}</span>

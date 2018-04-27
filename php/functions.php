@@ -97,7 +97,8 @@ function listFolder(string $folder, string $sound): array {
           'icon'    => getIcon($element)
         , 'name'    => $element
         , 'path'    => $path
-        , 'type'    => finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path)
+        // , 'type'    => finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path)
+        , 'type'    => mime_content_type($path)
         , 'size'    => filesize($path)
         , 'owner'   => posix_getpwuid(fileowner($path))['name']
         , 'chmod'   => decoct(fileperms($path) & 0777)
@@ -113,7 +114,8 @@ function listFolder(string $folder, string $sound): array {
 
       'folders'   => $folders
     , 'files'     => $files
-    , 'sound'     => $sound === 'true' ? getRandomSound() : false
+    // , 'sound'     => $sound === 'true' ? getRandomSound() : false
+    , 'sound'     => $sound === 'true' ? 'click.mp3' : false
 
   ];
 
@@ -128,7 +130,7 @@ function getIcon(string $file): string {
 
     $icon = 'image';
 
-  } else if($extension === 'mp3') {
+  } else if($extension === 'mp3' || $extension === 'wav') {
 
     $icon = 'music';
 
@@ -146,12 +148,12 @@ function getIcon(string $file): string {
 
 }
 
-function getRandomSound() {
-
-  $sounds = array_values(array_diff(scandir('assets/sounds'), array('.', '..')));
-
-  return $sounds[array_rand($sounds)];
-
-}
+// function getRandomSound() {
+//
+//   $sounds = array_values(array_diff(scandir('assets/sounds'), array('.', '..')));
+//
+//   return $sounds[array_rand($sounds)];
+//
+// }
 
 ?>
