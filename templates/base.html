@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/favicon-acs.png"/>
+    <link rel="stylesheet" href="assets/css/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/explorer.css">
+    <title>Explorator</title>
+  </head>
+  <body>
+    <div class="container">
+
+      <h1>Explorator</h1>
+
+      <form method="get">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+
+            {# BREADCRUMB #}
+            {% for item in breadcrumb %}
+              <li class="breadcrumb-item">
+                <a href="?path={{ item.path }}&sound=false&view={{ view }}">{{ item.name }}</a>
+              </li>
+            {% endfor %}
+
+          </ol>
+        </nav>
+      </form>
+
+      {% if error is null %}
+        <div id="d-views">
+          <button class="b-view" data-uri="{{ uri }}" data-view="simple">Vue Simple</button>
+          <button class="b-view" data-uri="{{ uri }}" data-view="details">Vue Détaillée</button>
+        </div>
+      {% endif %}
+
+      <div class="content">
+        {% if error %}
+          <p>{{ error }}</p>
+        {% else %}
+          {% block content %}{% endblock %}
+        {% endif %}
+      </div>
+
+      {% if scaffolding.sound %}
+        <audio src="assets/sounds/{{ scaffolding.sound }}" autoplay></audio>
+      {% endif %}
+
+    </div>
+    <script src="assets/js/explorer.js"></script>
+  </body>
+</html>

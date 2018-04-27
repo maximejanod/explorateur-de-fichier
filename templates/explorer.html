@@ -15,18 +15,26 @@
       <h1>Explorator</h1>
 
       <form method="get">
+
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
 
             {# BREADCRUMB #}
             {% for item in breadcrumb %}
               <li class="breadcrumb-item">
-                <a href="?path={{ item.path }}&sound=false">{{ item.name }}</a>
+                <a href="?path={{ item.path }}&view=&sound=false">{{ item.name }}</a>
               </li>
             {% endfor %}
 
           </ol>
         </nav>
+
+        <select data-view="{{ uri }}">
+          <option value="simple">Simple</option>
+          <option value="details">Détails</option>
+        </select>
+        <button id="b-view">Changer Vue</button>
+
       </form>
 
       <div class="content">
@@ -42,7 +50,7 @@
             <table class="table">
               <thead>
 
-                <tr>
+                <tr id="tr-desktop">
                   <th scope="col"></th>
                   <th scope="col">Name</th>
                   <th scope="col">Type</th>
@@ -52,10 +60,10 @@
                   <th scope="col">Date</th>
                 </tr>
 
-                <!-- <tr>
+                <tr id="tr-mobile">
                   <th scope="col"></th>
                   <th scope="col">Dossiers / Fichiers</th>
-                </tr> -->
+                </tr>
 
               </thead>
               <tbody>
@@ -71,17 +79,17 @@
                 {# FILES #}
                 {% for file in scaffolding.files %}
 
-                  <tr>
+                  <tr class="tr-desktop">
                     <th scope="row"><img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon"></th>
                     <td><a href="{{ file.path }}" download>{{ file.name }}</a></td>
                     <td>{{ file.type }}</td>
-                    <td> {{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %}</td>
+                    <td>{{ file.size }} {% if file.size > 0 %} octets {% else %} octet {% endif %}</td>
                     <td>{{ file.owner }}</td>
                     <td>0{{ file.chmod }}</td>
                     <td>{{ file.date }}</td>
                   </tr>
 
-                  <!-- <tr>
+                  <tr class="tr-mobile">
                     <th scope="row"><img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon"></th>
                     <td>
                       <span><a href="{{ file.path }}" download>{{ file.name }}</a></span>
@@ -91,7 +99,7 @@
                       <span>{{ file.chmod }}</span>
                       <span>{{ file.date }}</span>
                     </td>
-                  </tr> -->
+                  </tr>
 
                 {% endfor %}
 

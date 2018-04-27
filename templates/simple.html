@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<ul>
+  <form method="get">
+
+    {# FOLDERS #}
+    {% for folder in scaffolding.folders %}
+      <li class="folder">
+        <a href="?path={{ folder.path }}&sound=true&view={{ view }}">
+          <img class="i-folder" src="assets/icons/folder.png" alt="folder icon">
+          {{ folder.name }}
+        </a>
+      </li>
+    {% endfor %}
+
+  </form>
+
+    {# FILES #}
+    {% for file in scaffolding.files %}
+      <li class="file">
+        <img class="i-file" src="assets/icons/{{ file.icon }}.png" alt="file icon">
+        <a href="{{ file.path }}" download>{{ file.name }}</a>
+      </li>
+    {% endfor %}
+
+</ul>
+
+{% endblock %}

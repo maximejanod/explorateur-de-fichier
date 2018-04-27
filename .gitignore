@@ -1,7 +1,9 @@
 
 composer.lock
 explorer.old.php
+index.old.php
 recursive.php
-/php
 /vendor
 /cache
+/templates/explorer.html
+/templates/explorer.old.html
